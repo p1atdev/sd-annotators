@@ -109,3 +109,4 @@ an anime illustration of a girl, 1girl, black hair, short hair....
 - [ ] cut のやつを整える
 - [ ] WD14Tagger
 - [ ] イラスト→スケッチ変換
+- [ ] requirements.txt
