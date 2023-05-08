@@ -57,14 +57,14 @@ def replacer(caption: str):
     return caption.strip()
 
 
-def process_images(images, output, ext, override, progress_bar):
+def process_images(images, output, ext, overwrite, progress_bar):
     blip2 = BLIP2()
 
     for image_path in images:
         # print(f"Processing {image_path}")
         caption_path = output / (image_path.stem + f".{ext}")
 
-        if caption_path.exists() and not override:
+        if caption_path.exists() and not overwrite:
             progress_bar.update(1)
             continue
 
@@ -87,10 +87,10 @@ def main(args):
         captions_dir = input_images_dir
     else:
         captions_dir = Path(captions_dir)
-    batch_size = args.batch_size
+    threads = args.threads
     model = args.model
     ext = args.ext
-    override = args.override
+    overwrite = args.overwrite
 
     # png, jpg, jpeg, webp
     cropped_images = (
@@ -102,15 +102,15 @@ def main(args):
 
     print(f"Found {len(cropped_images)} images")
 
-    chunks = np.array_split(cropped_images, batch_size)
+    chunks = np.array_split(cropped_images, threads)
 
     with tqdm(total=len(cropped_images)) as pbar:
-        with ThreadPoolExecutor(max_workers=batch_size) as executor:
+        with ThreadPoolExecutor(max_workers=threads) as executor:
             futures = []
             for chunk in chunks:
                 futures.append(
                     executor.submit(
-                        process_images, chunk, captions_dir, ext, override, pbar
+                        process_images, chunk, captions_dir, ext, overwrite, pbar
                     )
                 )
 
@@ -134,11 +134,11 @@ if __name__ == "__main__":
         help="Path to directory to save captions",
     )
     parser.add_argument(
-        "--batch_size",
-        "-b",
+        "--threads",
+        "-t",
         type=int,
         default=1,
-        help="Batch size for inference",
+        help="Number of threads to process",
     )
     parser.add_argument(
         "--model",
@@ -155,9 +155,9 @@ if __name__ == "__main__":
         help="Extension to use for saving captions",
     )
     parser.add_argument(
-        "--override",
+        "--overwrite",
         action="store_true",
-        help="Override existing captions",
+        help="Overwrite existing captions",
     )
     args = parser.parse_args()
 
