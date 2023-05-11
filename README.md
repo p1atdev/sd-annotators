@@ -104,6 +104,14 @@ an anime illustration of a girl, 1girl, black hair, short hair....
 
 </details>
 
+## split
+
+midjourney や nijijourney の４枚くっついた画像を分割することができます。
+
+```bash
+python path/to/split path/to/output --threads 40
+```
+
 ## TODO
 
 - [ ] cut のやつを整える
