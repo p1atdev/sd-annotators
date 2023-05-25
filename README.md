@@ -109,8 +109,20 @@ an anime illustration of a girl, 1girl, black hair, short hair....
 midjourney や nijijourney の４枚くっついた画像を分割することができます。
 
 ```bash
-python path/to/split path/to/output --threads 40
+python split.py path/to/split path/to/output --threads 40
 ```
+
+## interrogator
+
+CLIP Interrogator によるタグを生成する
+
+```bash
+python .\interrogator.py path/to/interrogate --model v2 -t 4 -e ci 
+```
+
+- `--model`: 使う CLIP モデル (v1 は v1系SD向け、v2はv2系SD向け)
+- `--artist`: アイティストタグを有効にする (`by NAME` みたいな)
+- `--trending`: トレンドタグを有効にする (`pixiv contest winner!!` みたいな)
 
 ## TODO
 
