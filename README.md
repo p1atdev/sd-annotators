@@ -11,6 +11,8 @@
 - caption_filter.py: `.txt` のタグファイルが入ったフォルダを指定して、特定のタグが入ったキャプションと画像をフィルターする
 - cut_up_down.py: 画像の上下の一部をカットする (主にロゴの削除向け)
 - merge_captions.py: 二種類のテキストファイルの拡張子を指定して、どちらか一方にまとめる
+- split.py: midjourneyなどの画像を四分割する (並列処理可能)
+- interrogator.py: [CLIP Interrogator](https://github.com/pharmapsychotic/clip-interrogator/tree/main) でキャプションをつける (並列処理可能)
 
 ## blip captioner
 
@@ -115,6 +117,10 @@ python split.py path/to/split path/to/output --threads 40
 ## interrogator
 
 CLIP Interrogator によるタグを生成する
+
+```bash
+pip install clip-interrogator==0.6.0
+```
 
 ```bash
 python .\interrogator.py path/to/interrogate --model v2 -t 4 -e ci 
