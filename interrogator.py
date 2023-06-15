@@ -9,7 +9,7 @@ import argparse
 import os
 from PIL import Image
 from clip_interrogator import Config, Interrogator
-
+import utils
 
 HF_TOKEN = ""
 
@@ -136,13 +136,7 @@ def main(args):
             filter_tags = DEFAULT_FILTER_TAGS
             print(f"Filter tags not specified, using default: {filter_tags}")
 
-    # png, jpg, jpeg, webp
-    cropped_images = (
-        list(input_images_dir.glob("*.png"))
-        + list(input_images_dir.glob("*.jpg"))
-        + list(input_images_dir.glob("*.jpeg"))
-        + list(input_images_dir.glob("*.webp"))
-    )
+    cropped_images = utils.glob_all_images(input_images_dir)
 
     print(f"Found {len(cropped_images)} images")
 

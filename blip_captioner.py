@@ -7,6 +7,7 @@ from tqdm import tqdm
 from pathlib import Path
 import argparse
 from concurrent.futures import ThreadPoolExecutor
+import utils
 
 
 class BLIP2:
@@ -92,13 +93,7 @@ def main(args):
     ext = args.ext
     overwrite = args.overwrite
 
-    # png, jpg, jpeg, webp
-    cropped_images = (
-        list(input_images_dir.glob("*.png"))
-        + list(input_images_dir.glob("*.jpg"))
-        + list(input_images_dir.glob("*.jpeg"))
-        + list(input_images_dir.glob("*.webp"))
-    )
+    cropped_images = utils.glob_all_images(input_images_dir)
 
     print(f"Found {len(cropped_images)} images")
 

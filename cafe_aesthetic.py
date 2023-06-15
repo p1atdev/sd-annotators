@@ -7,6 +7,7 @@ import argparse
 from concurrent.futures import ThreadPoolExecutor
 from tqdm import tqdm
 import numpy as np
+import utils
 
 from PIL import Image, ImageFile
 
@@ -109,11 +110,7 @@ def main(args):
     for folder in MODEL_MAP[model_type]["folders"]:
         (output_path / folder).mkdir(parents=True, exist_ok=True)
 
-    images = [
-        input_path / image
-        for image in list(input_path.glob("*"))
-        if image.suffix.lower() in [".jpg", ".png", ".jpeg", ".webp"]
-    ]
+    images = utils.glob_all_images(input_path)
 
     print(f"Found {len(images)} images")
 

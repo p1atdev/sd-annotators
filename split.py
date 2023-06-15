@@ -5,6 +5,7 @@ import argparse
 from tqdm import tqdm
 from concurrent.futures import ThreadPoolExecutor
 import numpy as np
+import utils
 
 
 def process_images(images, output_directory, progress_bar):
@@ -43,12 +44,7 @@ def __main__(input, output, threads):
     if not output_directory.exists():
         output_directory.mkdir(parents=True)
 
-    images = list(input_directory.glob("*"))
-    images = [
-        str(image)
-        for image in images
-        if image.suffix.lower() in [".png", ".jpg", ".jpeg", ".webp"]
-    ]
+    images = utils.glob_all_images(input_directory)
 
     chunks = np.array_split(images, threads)
 

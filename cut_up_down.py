@@ -5,6 +5,7 @@ from pathlib import Path
 from tqdm import tqdm
 from concurrent.futures import ThreadPoolExecutor
 import numpy as np
+import utils
 
 
 def trim_images(image_files, output_folder, progress_bar):
@@ -25,12 +26,7 @@ def trim_images(image_files, output_folder, progress_bar):
 
 
 def main(input_folder, output_folder, batch_size):
-    image_files = list(Path(input_folder).glob("*"))
-    image_files = [
-        str(image_file)
-        for image_file in image_files
-        if image_file.suffix in [".jpg", ".png", ".jpeg", ".webp"]
-    ]
+    image_files = utils.glob_all_images(input_folder)
 
     os.makedirs(output_folder, exist_ok=True)
 
